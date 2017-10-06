@@ -129,17 +129,17 @@ describe('Recipes', function () {
   // edge case - POST request missing name
   //  1. make a POST request without name
   //  2. inspect response, should have message with name
-  // it('should receive error message for POST request without name', function () {
-  //   const newItem = {ingredients: ['tea bag', 'hot water', 'honey']}
-  //   return chai.request(app)
-  //     .post('/recipes')
-  //     .send(newItem)
-  //     .then(function (err, res) {
-  //       res.should.have.status(400)
-  //       res.body.should.be.a('string').that.includes('name')
-  //
-  //       // resolve promise
-  //       return Promise.resolve()
-  //     })
-  // })
+  it('should receive error message for POST request without name', function () {
+    const newItem = {ingredients: ['tea bag', 'hot water', 'honey']}
+    return chai.request(app)
+      .post('/recipes')
+      .send(newItem)
+      .catch(function (err) {
+        err.should.have.status(400)
+        err.response.error.text.should.be.a('string').that.includes('name')
+
+        // resolve promise
+        return Promise.resolve()
+      })
+  })
 })
